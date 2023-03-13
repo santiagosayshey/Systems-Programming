@@ -1,0 +1,11 @@
+#!/bin/bash
+
+filename="$1"
+
+for i in {1..25}; do
+  encoder=$(./create_pattern -k "$i" | tr -d '[]')
+  echo "Shift $i"
+  cat $filename  | tr '[:upper:]' '[:lower:]' | tr [a-z] "$encoder"
+  echo
+done
+
