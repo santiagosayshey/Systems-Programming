@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Save the filename argument in a varaible
+filename="$1"
+
+# Iterate through all possible shifts
+for i in {1..25}
+do
+  # Output the current shift
+  echo "Shift $i"
+  # Call 'caesar' with the current shift value
+  ./caesar -u -k "$i" < "$filename"
+done

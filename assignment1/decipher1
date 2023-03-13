@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Save the filename argument in a variable
+filename="$1"
+correctLine=""
+
+# Count the total number of words in the file
+totalWords=$(wc -w < "$filename")
+
+# Basic decode structure
+for i in {1..25}
+do
+  echo "Shift $i"
+  ./caesar -u -k "$i" < "$filename"
+  # Call 'caesar' with the current shift value and save the result in an array
+  words=($(./caesar -u -k "$i" < "$filename"))
+  correctWords=0
+
+  # iterate through the current line
+  for word in "${words[@]}"
+  do
+    # check if word is in dictionary
+    if grep -q -i "$word$" /usr/share/dict/words
+    then
+      # Incremenent correct word counter
+      correctWords=$((correctWords+1))
+    fi
+  done
+
+  # output number of correct words
+  echo $correctWords " / " $totalWords " words correct"
+
+  # check if half the words are correct
+  if (( correctWords >= totalWords/2 ))
+  then
+    correctLine="${words[@]}"
+    echo
+    echo "This is the correct decipher!"
+    break
+  fi
+  echo
+done
+
+# cant figure out how to include punctuation in the decipherer, so this is where I assume the 'incorrect words' come from
+# still pretty high total compared to the non correct deciphers
+# half gives room for some error
+# should work up to at least 4/5 according to my testing, but impossible to say the highest degree
+
+# run with decipher.txt for a surprise! :D

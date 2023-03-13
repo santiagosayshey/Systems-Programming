@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Initialize variables
+k=0             # shift value for the encoding range
+u=false         # flag for converting to uppercase
+encoder=""      # variable to hold the resulting encoding range
+c=0             # needed for 4 letter shift, intialise to 0
+d=0
+
+# Parse command line arguments
+# Keep looping until all arguments are processed
+while (( $# > 0 ))
+do
+  if [ "$1" == "-k" ]
+  then
+    k="$2"
+    shift 2
+  elif [ "$1" == "-u" ]
+  then
+    u=true
+    shift
+  else
+    shift
+  fi
+done
+
+# Convert 'a' and 'b' to their ASCII values
+a=$(printf '%d' "'a")
+b=$(printf '%d' "'z")
+
+# If the new value of 'b' is greater than the ASCII value of 'z',
+# wrap around to 'a' and continue counting from there
+if (( $((b + k)) > $(printf '%d' "'z") ))
+then
+  a=$((a + k))
+  b=$(printf '%d' "'z")
+  c=$(printf '%d' "'a")
+  d=$((c + k - 1))
+
+  # Convert the resulting ASCII values back to characters
+  a=$(printf "\\$(printf '%03o' "$a")")
+  b=$(printf "\\$(printf '%03o' "$b")")
+  c=$(printf "\\$(printf '%03o' "$c")")
+  d=$(printf "\\$(printf '%03o' "$d")")
+  encoder="[$a-$b$c-$d]"
+
+# if the resulting range is within [a-z]
+else
+  a=$(printf "\\$(printf '%03o' "$a")")
+  b=$(printf "\\$(printf '%03o' "$b")")
+  encoder="[$a-$b]"
+fi
+
+# If the uppercase flag is set, convert to uppercase
+if $u
+then
+  encoder=$(echo "$encoder" | tr '[:lower:]' '[:upper:]')
+fi
+
+# Output the resulting encoding range
+echo $encoder

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "I've spent all night on this assignment and it's 5am. Reading a wikipedia article will probably blind me so I'm leaving it here"
+
+# also I wonder how diminishing the returns are for using decipher2 compared to decipher1 for longer and londer ciphers
+# surely the difference becomes negligble at some point right?
+

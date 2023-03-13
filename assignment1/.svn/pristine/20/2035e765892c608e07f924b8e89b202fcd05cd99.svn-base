@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Call the create_pattern script with the provided command line arguments and save the result in a variable
+encoder=$(./create_pattern "$@")
+
+# Read input line by line until EOF and encode each line using the encoding range
+while read -r line || [[ -n "$line" ]]
+do
+  # Use tr to replace all lowercase letters in the input line with their encoded values
+  echo "$line" | tr '[:upper:]' '[:lower:]' | tr [a-z] "$encoder"
+done

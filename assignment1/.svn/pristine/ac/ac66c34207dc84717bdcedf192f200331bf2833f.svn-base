@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in {1..25}
+do
+  echo "Shift $i"
+  echo $(./caesar -u -k $i < $1)
+done
+

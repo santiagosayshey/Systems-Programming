@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+svn mkdir  --parents -m "spc prac start" https://version-control.adelaide.edu.au/svn/a1799298/2023/s1/spc/assignment1
+
+svn co https://version-control.adelaide.edu.au/svn/a1799298/2023/s1/spc/assignment1
