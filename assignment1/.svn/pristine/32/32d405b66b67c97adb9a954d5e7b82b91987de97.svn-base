@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Check that a command-line argument was provided
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <u|l>"
+  exit 1
+fi
+
+# Check that the command-line argument is valid
+if [ "$1" != "u" ] && [ "$1" != "l" ]; then
+  echo "Invalid argument: $1 (must be 'u' or 'l')"
+  exit 1
+fi
+
+# Convert the text file to the desired case and overwrite the original file
+if [ "$1" = "u" ]; then
+  tr '[:lower:]' '[:upper:]' < test.txt > test.txt.tmp
+  mv test.txt.tmp test.txt
+else
+  tr '[:upper:]' '[:lower:]' < test.txt > test.txt.tmp
+  mv test.txt.tmp test.txt
+fi
